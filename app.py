@@ -43,6 +43,12 @@ SYSTEM_PROMPT = (
 )
 
 
+# Nombre maximum de messages conservés dans l'historique injecté au LLM.
+# Au-delà, les plus anciens sont ignorés silencieusement par Ollama (dépassement du contexte).
+# 10 messages = 5 échanges humain/assistant.
+MAX_HISTORY_MESSAGES = 10
+
+
 def build_chain():
     """
     Construit la chaîne LangChain (LCEL) : prompt + LLM.
@@ -51,12 +57,13 @@ def build_chain():
     L'opérateur | (pipe) connecte les composants : prompt | llm
     """
     # ChatOllama : connecteur moderne LangChain → Ollama
-    # Utilise l'API chat (messages) plutôt que l'API completion (texte brut)
-    # temperature=0.7 : équilibre entre créativité et précision (0=déterministe, 1=créatif)
+    # temperature=0.3 : plus fiable pour du code sur un petit modèle (3B)
+    # num_ctx=4096 : fixe explicitement la fenêtre de contexte pour éviter les troncatures silencieuses
     llm = ChatOllama(
         model=MODEL_NAME,
         base_url=OLLAMA_BASE_URL,
-        temperature=0.7,
+        temperature=0.3,
+        num_ctx=4096,
     )
 
     # Le prompt template définit la structure du message envoyé au LLM :
@@ -95,21 +102,40 @@ async def on_chat_start():
 async def on_message(message: cl.Message):
     """
     Appelée à chaque message envoyé par l'utilisateur.
-    Transmet le message à la chaîne LangChain avec l'historique et retourne la réponse.
+    Streame la réponse token par token pour un meilleur ressenti (surtout sur CPU lent).
     """
     chain = cl.user_session.get("chain")
     history = cl.user_session.get("history")
 
-    # Affiche un indicateur de chargement pendant la génération
-    async with cl.Step(name="Réflexion en cours..."):
-        response = await chain.ainvoke({
+    # Crée un message vide qui sera rempli au fil du streaming
+    msg = cl.Message(content="")
+    full_response = ""
+
+    try:
+        # astream() envoie les tokens au fur et à mesure au lieu d'attendre la réponse complète.
+        # Sur CPU à 6-8 tokens/sec, ça change radicalement le ressenti utilisateur.
+        async for chunk in chain.astream({
             "input": message.content,
-            "history": history,
-        })
+            # On borne l'historique pour éviter de dépasser la fenêtre de contexte du LLM
+            "history": history[-MAX_HISTORY_MESSAGES:],
+        }):
+            full_response += chunk.content
+            await msg.stream_token(chunk.content)
 
-    # Met à jour l'historique avec le nouveau tour de conversation
+    except Exception:
+        await cl.Message(
+            content=(
+                f"⚠️ Impossible de joindre Ollama sur `{OLLAMA_BASE_URL}` "
+                f"avec le modèle `{MODEL_NAME}`.\n\n"
+                "Vérifie que le conteneur tourne (`docker compose ps`) "
+                "et que le modèle est téléchargé (`docker exec ollama ollama pull llama3.2:3b`)."
+            )
+        ).send()
+        return
+
+    await msg.send()
+
+    # Met à jour l'historique complet (pas borné) — le bornage est appliqué à l'envoi uniquement
     history.append(HumanMessage(content=message.content))
-    history.append(AIMessage(content=response.content))
+    history.append(AIMessage(content=full_response))
     cl.user_session.set("history", history)
-
-    await cl.Message(content=response.content).send()
