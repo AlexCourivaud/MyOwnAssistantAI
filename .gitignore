@@ -32,7 +32,13 @@ Thumbs.db
 __pycache__/
 *.pyc
 
-# Orthers 
+# DB:
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Others 
 DECISIONS.md
 MyownAIassistant.md
 LEARNINGS.md

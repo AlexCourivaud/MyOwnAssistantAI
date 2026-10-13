@@ -12,6 +12,14 @@
 # langchain-ollama : connecteur LangChain → Ollama (inclut langchain-core)
 langchain-ollama==1.1.0
 
+# langchain-community : fournit SQLChatMessageHistory pour la mémoire persistante (Phase 2)
+langchain-community==0.4.2
+
+# --- Persistance (Phase 2) ---
+# sqlalchemy[asyncio] : requis par SQLChatMessageHistory. L'extra [asyncio]
+# installe greenlet, sans lequel l'import de langchain-community plante.
+sqlalchemy[asyncio]>=2.0
+
 # --- Interface web ---
 # chainlit : interface de chat web, gestion des sessions utilisateur
 chainlit==2.12.0
