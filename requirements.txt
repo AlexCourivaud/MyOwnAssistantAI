@@ -1,0 +1,33 @@
+# requirements.txt — My Own AI Assistant
+#
+# Dépendances Python du projet.
+# Installation : pip install -r requirements.txt
+#
+# Organisation :
+#   - LangChain : orchestration du LLM et des chaînes de traitement
+#   - Chainlit  : interface web de chat
+#   - Utilitaires : configuration et variables d'environnement
+#
+# Phase 3 (RAG) ajoutera : chromadb, sentence-transformers, pypdf
+
+# --- LangChain ---
+# langchain : framework principal d'orchestration
+langchain==0.3.7
+
+# langchain-community : connecteurs tiers (Ollama, loaders, etc.)
+langchain-community==0.3.7
+
+# langchain-core : types et interfaces de base (requis par langchain)
+langchain-core==0.3.15
+
+# --- Interface web ---
+# chainlit : interface de chat web, gestion des sessions utilisateur
+chainlit==1.3.2
+
+# --- Connecteur Ollama ---
+# ollama : client Python officiel pour l'API Ollama
+ollama==0.3.3
+
+# --- Utilitaires ---
+# python-dotenv : charge les variables d'environnement depuis un fichier .env
+python-dotenv==1.0.1

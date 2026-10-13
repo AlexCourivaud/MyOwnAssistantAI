@@ -1,0 +1,30 @@
+# Environnement Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Variables d'environnement
+.env
+
+
+# Base vectorielle (Phase 3)
+chroma_db/
+
+# Documents personnels (Phase 3)
+documents/
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Orthers 
+DECISIONS.md
+MyownAIassistant.md
+LEARNINGS.md

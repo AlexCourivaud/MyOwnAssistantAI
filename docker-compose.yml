@@ -1,0 +1,25 @@
+# docker-compose.yml — My Own AI Assistant
+#
+# Ce fichier lance un seul service : Ollama.
+# Ollama est le serveur qui fait tourner le LLM (Llama 3.2 3B) en local.
+#
+# Pour lancer : docker compose up -d
+# Pour arrêter : docker compose down
+# Pour voir les logs : docker compose logs -f ollama
+
+version: '3.8'
+
+services:
+
+  ollama:
+    image: ollama/ollama        # Image officielle Ollama depuis Docker Hub
+    container_name: ollama      # Nom fixe du container (utile pour les commandes docker exec)
+    ports:
+      - "11434:11434"           # Port exposé : l'API Ollama sera accessible sur http://localhost:11434
+    volumes:
+      - ollama_data:/root/.ollama  # Volume persistant : les modèles téléchargés survivent aux restarts
+    restart: unless-stopped     # Redémarre automatiquement sauf si tu l'arrêtes manuellement
+
+# Volumes nommés : Docker gère le stockage, les données persistent même si le container est supprimé
+volumes:
+  ollama_data:
