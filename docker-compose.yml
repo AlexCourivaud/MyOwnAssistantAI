@@ -7,8 +7,6 @@
 # Pour arrêter : docker compose down
 # Pour voir les logs : docker compose logs -f ollama
 
-version: '3.8'
-
 services:
 
   ollama:
