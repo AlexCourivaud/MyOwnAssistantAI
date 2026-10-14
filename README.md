@@ -89,7 +89,18 @@ cp .env.example .env
 # Edit .env if needed (defaults work out of the box)
 ```
 
-### 6. Launch the assistant
+### 6. Index your documents (optional, for RAG)
+
+Add your PDF, TXT or Markdown files to the `documents/` folder, then run:
+
+```bash
+python ingest.py
+```
+
+> First run downloads the embedding model (~470 MB). Subsequent runs are fast.
+> Re-run every time you add or modify documents.
+
+### 7. Launch the assistant
 
 ```bash
 chainlit run app.py

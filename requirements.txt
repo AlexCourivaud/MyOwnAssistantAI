@@ -19,7 +19,7 @@ langchain==1.4.5
 # --- Persistance (Phase 2) ---
 # sqlalchemy[asyncio] : requis par SQLChatMessageHistory. L'extra [asyncio]
 # installe greenlet, sans lequel l'import de langchain-community plante.
-sqlalchemy[asyncio]>=2.0
+sqlalchemy[asyncio]==2.1.4
 
 # --- RAG / Base vectorielle (Phase 3) ---
 # langchain-chroma : connecteur LangChain → ChromaDB
@@ -31,7 +31,8 @@ chromadb==1.5.9
 # langchain-huggingface : connecteur LangChain → HuggingFace / sentence-transformers
 langchain-huggingface==1.2.3
 
-# sentence-transformers : modèle d'embeddings local (all-MiniLM-L6-v2, ~90 Mo)
+# sentence-transformers : modèle d'embeddings local multilingue (~470 Mo)
+# Modèle : paraphrase-multilingual-MiniLM-L12-v2 (français inclus)
 # Calcule les vecteurs de similarité sans appel API externe
 sentence-transformers==6.1.0
 
