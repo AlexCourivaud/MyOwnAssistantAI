@@ -104,8 +104,11 @@ Open your browser at **http://localhost:8000** 🎉
 ```
 my-own-ai-assistant/
 ├── docker-compose.yml   # Ollama service
-├── app.py               # Chainlit assistant
+├── app.py               # Chainlit assistant (with RAG router)
+├── ingest.py            # Document ingestion script
+├── documents/           # Your PDF, TXT, MD files
 ├── requirements.txt     # Python dependencies
+├── requirements.lock    # Locked dependency versions
 ├── .env.example         # Environment variables template
 └── README.md            # This file
 ```
@@ -115,8 +118,8 @@ my-own-ai-assistant/
 ## 🗺️ Roadmap
 
 - [x] Phase 1 — Local assistant (code & general knowledge)
-- [ ] Phase 2 — Persistent conversation memory
-- [ ] Phase 3 — RAG on personal documents (ChromaDB)
+- [x] Phase 2 — Persistent conversation memory
+- [x] Phase 3 — RAG on personal documents (ChromaDB)
 - [ ] Phase 4 — Private network access (multi-device)
 - [ ] Phase 5 — Agents, tools, LangSmith observability
 

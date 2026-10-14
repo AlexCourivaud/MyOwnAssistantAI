@@ -28,6 +28,9 @@ langchain-chroma==0.2.4
 # chromadb : base vectorielle locale, stockée comme un dossier sur le disque
 chromadb==1.5.9
 
+# langchain-huggingface : connecteur LangChain → HuggingFace / sentence-transformers
+langchain-huggingface==1.2.3
+
 # sentence-transformers : modèle d'embeddings local (all-MiniLM-L6-v2, ~90 Mo)
 # Calcule les vecteurs de similarité sans appel API externe
 sentence-transformers==6.1.0

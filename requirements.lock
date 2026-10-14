@@ -63,6 +63,7 @@ langchain-chroma==0.2.4
 langchain-classic==1.0.8
 langchain-community==0.4.2
 langchain-core==1.6.10
+langchain-huggingface==1.2.3
 langchain-ollama==1.1.0
 langchain-protocol==0.0.19
 langchain-text-splitters==1.1.3
