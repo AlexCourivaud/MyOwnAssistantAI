@@ -30,10 +30,10 @@ chromadb==1.5.9
 
 # sentence-transformers : modèle d'embeddings local (all-MiniLM-L6-v2, ~90 Mo)
 # Calcule les vecteurs de similarité sans appel API externe
-sentence-transformers==3.4.1
+sentence-transformers==6.1.0
 
 # pypdf : lecture des fichiers PDF pour l'ingestion (Phase 3)
-pypdf==5.4.0
+pypdf==6.20.1
 
 # --- Interface web ---
 # chainlit : interface de chat web, gestion des sessions utilisateur
@@ -41,4 +41,4 @@ chainlit==2.12.0
 
 # --- Utilitaires ---
 # python-dotenv : charge les variables d'environnement depuis un fichier .env
-python-dotenv==1.0.1
+python-dotenv==1.2.4
