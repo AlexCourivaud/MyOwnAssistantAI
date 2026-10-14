@@ -5,8 +5,6 @@
 #
 # Note : langchain-core est une dépendance indirecte de langchain-ollama,
 # inutile de l'épingler ici — pip la résoudra automatiquement.
-#
-# Phase 3 (RAG) ajoutera : langchain, chromadb, sentence-transformers, pypdf
 
 # --- LangChain / Ollama ---
 # langchain-ollama : connecteur LangChain → Ollama (inclut langchain-core)
@@ -15,10 +13,27 @@ langchain-ollama==1.1.0
 # langchain-community : fournit SQLChatMessageHistory pour la mémoire persistante (Phase 2)
 langchain-community==0.4.2
 
+# langchain : chaînes de haut niveau (RetrievalQA, router) — requis pour le RAG (Phase 3)
+langchain==1.4.5
+
 # --- Persistance (Phase 2) ---
 # sqlalchemy[asyncio] : requis par SQLChatMessageHistory. L'extra [asyncio]
 # installe greenlet, sans lequel l'import de langchain-community plante.
 sqlalchemy[asyncio]>=2.0
+
+# --- RAG / Base vectorielle (Phase 3) ---
+# langchain-chroma : connecteur LangChain → ChromaDB
+langchain-chroma==0.2.4
+
+# chromadb : base vectorielle locale, stockée comme un dossier sur le disque
+chromadb==1.5.9
+
+# sentence-transformers : modèle d'embeddings local (all-MiniLM-L6-v2, ~90 Mo)
+# Calcule les vecteurs de similarité sans appel API externe
+sentence-transformers==3.4.1
+
+# pypdf : lecture des fichiers PDF pour l'ingestion (Phase 3)
+pypdf==5.4.0
 
 # --- Interface web ---
 # chainlit : interface de chat web, gestion des sessions utilisateur
